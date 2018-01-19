@@ -6,7 +6,7 @@ class CreateCards < ActiveRecord::Migration[5.1]
       t.references :assignee, foreign_key: true
       t.string :title
       t.text :description
-      t.boolean :archived
+      t.boolean :archived, default: false, null: false
 
       t.timestamps
     end

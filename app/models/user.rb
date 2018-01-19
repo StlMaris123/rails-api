@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :comments, foreign_key: 'creator_id', dependent: :nullify
   has_many :assigned_cards, foreign_key: 'assignee_id', dependent: :nullify, class_name: 'Card'
 
-  validates :email, presence: true, iniqueness: true
+  validates :email, presence: true, uniqueness: true
 
   default_scope { order(:created_at) }
 

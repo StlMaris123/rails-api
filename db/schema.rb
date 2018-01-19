@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20180117182634) do
   create_table "boards", force: :cascade do |t|
     t.integer "creator_id"
     t.string "title"
-    t.boolean "archived"
+    t.boolean "archived", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_boards_on_creator_id"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20180117182634) do
     t.integer "assignee_id"
     t.string "title"
     t.text "description"
-    t.boolean "archived"
+    t.boolean "archived", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["assignee_id"], name: "index_cards_on_assignee_id"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20180117182634) do
     t.integer "board_id"
     t.integer "creator_id"
     t.string "title"
-    t.boolean "archived"
+    t.boolean "archived", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["board_id"], name: "index_lists_on_board_id"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20180117182634) do
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
-    t.boolean "admin"
+    t.boolean "admin", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
