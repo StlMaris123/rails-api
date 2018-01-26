@@ -5,6 +5,14 @@ class UserSerializer < ActiveModel::Serializer
 
   attributes :mailto_url
 
+  has_many :active_boards, serializer: BoardPreviewSerializer do
+    object.boards.where(archived: false)
+  end
+
+  has_many :archived_boards, serializer: BoardPreviewSerializer do
+    object.boards.where(archived: true)
+  end
+
   def mailto_url
     "mailto:#{ object.email}"
   end
