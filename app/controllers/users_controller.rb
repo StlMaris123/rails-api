@@ -4,13 +4,18 @@ class UsersController < ApplicationController
   # GET /users
   def index
     @users = User.all
-
-    render json: @users
+    included_rels = params[:include] || []
+    if stale?(@users)
+    render json: @users, include: included_rels
+    end
   end
 
   # GET /users/1
   def show
-    render json: @user
+    included_rels = params[:include] || []
+    if stale?(@user)
+    render json: @user, include: included_rels
+    end
   end
 
   # POST /users
