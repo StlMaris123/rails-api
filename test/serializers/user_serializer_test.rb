@@ -1,7 +1,9 @@
 require 'test_helper'
+require 'support/serialization'
 
 class UserSerializerTest < ActiveSupport::TestCase
   include Rails.application.routes_url_helpers
+  include Serialization::Assertions
 
   setup do
     @user = users(:admin)
@@ -28,6 +30,18 @@ class UserSerializerTest < ActiveSupport::TestCase
     refute_nil boards_url
 
     assert_equal user_boards_url(@user), boards_url[:href]
+  end
+
+  test 'includes currently active Boards created by the user' do
+    active_boards = serialized_user[:active_boards]
+
+    assert_equal 1, active_boards.count
+
+    expected_ids = @user.boards.where(archived: false).pluck(:id)
+
+    assert_ids expected_ids, active_boards
+
+    assert_keys %i(id title link), active_boards.first
   end
 
   private

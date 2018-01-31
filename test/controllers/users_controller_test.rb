@@ -1,38 +1,51 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
-  setup do
+  before do
     @user = users(:one)
   end
 
-  test "should get index" do
-    get users_url, as: :json
-    assert_response :success
+  describe 'GET/users' do
+    it 'should successfully fetch all users' do
+      @expected_users = User.all
+      get users_url, as: :json
+      assert_response :ok
+
+      json_response = JSON.parse(response.body)
+      response_users = json_response['users']
+      assert_instance_of Array, response_users
+
+      assert_ids @expected_users.pluck(:id), response_users, 'id'
+
+      expected_keys = %w(id email gravatar_url admin created_at updated_at links)
+      assert_keys expected_keys, response_users.first
+    end
   end
 
-  test "should create user" do
-    assert_difference('User.count') do
-      post users_url, params: { user: {  } }, as: :json
+  describe 'GET/users/:id' do
+    it 'should successfully fetch the requested user' do
+      get user_url(@user)
+      assert_response :ok
+
+      response_user = json_response['user']
+      expected_keys = %w(id email gravatar_url admin created_at updated_at links active_boards)
+      assert_keys expected_keys, response_user
     end
 
-    assert_response 201
-  end
-
-  test "should show user" do
-    get user_url(@user), as: :json
-    assert_response :success
-  end
-
-  test "should update user" do
-    patch user_url(@user), params: { user: {  } }, as: :json
-    assert_response 200
-  end
-
-  test "should destroy user" do
-    assert_difference('User.count', -1) do
-      delete user_url(@user), as: :json
+    describe 'when id is unknown' do
+      it 'should respond with :not_found' do
+        get user_url(id: 'jim'), as: :json
+        assert_response :not_found
+      end
     end
+  end
 
-    assert_response 204
+  describe 'POST/users' do
+  end
+
+  describe 'PATCH/users:id' do
+  end
+
+  describe 'DELETE/users/:id' do
   end
 end
