@@ -19,6 +19,8 @@ gem 'puma', '~> 3.7'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 gem 'active_model_serializers'
+gem 'rack-attack'
+gem 'redis-rails'
 
 
 # Use Capistrano for deployment
