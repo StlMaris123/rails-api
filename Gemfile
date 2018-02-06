@@ -22,6 +22,7 @@ gem 'active_model_serializers'
 gem 'rack-attack'
 gem 'redis-rails'
 gem 'rack-attack-rate-limit', require: 'rack/attack/rate-limit'
+gem 'kaminari'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
