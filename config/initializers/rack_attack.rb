@@ -22,3 +22,8 @@ Rack::Attack.throttled_response = ->(env) {
   [status_code, headers, [body.to_json]]
 }
 
+
+#whitelist localhost for any number of requests
+Rack::Attack.safelist 'allow localhost' do |req|
+  '127.0.0.1' == req.ip || '::1' == req.ip
+end
