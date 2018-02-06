@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :assigned_cards, foreign_key: 'assignee_id', dependent: :nullify, class_name: 'Card'
 
   validates :email, presence: true, uniqueness: true
+  paginates_per 10
 
   default_scope { order(:created_at) }
 

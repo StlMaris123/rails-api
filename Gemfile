@@ -21,7 +21,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'active_model_serializers'
 gem 'rack-attack'
 gem 'redis-rails'
-
+gem 'rack-attack-rate-limit', require: 'rack/attack/rate-limit'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

@@ -34,5 +34,6 @@ module JelloServer
 
     # use Rack:Attach for rate limiting
     config.middleware.use Rack::Attack
+    config.middleware.use Rack::Attack::RateLimit, throttle: ['req/ip']
   end
 end
