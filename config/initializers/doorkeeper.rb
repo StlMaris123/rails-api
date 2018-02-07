@@ -1,14 +1,20 @@
 Doorkeeper.configure do
   # Change the ORM that doorkeeper will use (needs plugins)
   orm :active_record
+  base_controller 'ApplicationController'
+  realm 'Jello API'
+  access_token_expires_in 1.hour
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    fail "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
+    User.authenticate!(params[:username], params[:password])
     # Put your resource owner authentication logic here.
     # Example implementation:
     #   User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
   end
+
+  grant_flows []
+  use_refresh_token
 
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
   # admin_authenticator do
@@ -50,6 +56,7 @@ Doorkeeper.configure do
   # a registered application
   # Note: you must also run the rails g doorkeeper:application_owner generator to provide the necessary support
   # enable_application_owner confirmation: false
+
 
   # Define access token scopes for your provider
   # For more information go to
@@ -110,3 +117,4 @@ Doorkeeper.configure do
   # WWW-Authenticate Realm (default "Doorkeeper").
   # realm "Doorkeeper"
 end
+Doorkeeper.configuration.token_grant_types << "password"
