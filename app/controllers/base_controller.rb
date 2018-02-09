@@ -1,4 +1,5 @@
 class BaseController < ApplicationController
+  prepend JSONAPI::Rendering
 
   before_action :doorkeeper_authorize!
 
